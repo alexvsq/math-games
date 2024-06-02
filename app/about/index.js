@@ -1,11 +1,14 @@
-import { View, Text } from 'react-native'
-import { Link } from "expo-router"
+import { View, Text } from "react-native";
+import { Link } from "expo-router";
 
 export default function about() {
-    return (
-        <View>
-            <Text className=" font-bold text-white" >about</Text>
-            <Link href="/" className="text-white">Home</Link>
-        </View>
-    )
+  return (
+    <View>
+      <Text className=" font-bold text-white text-2xl">Hola Bb Ike 3!</Text>
+      <Text className=" font-bold text-white text-2xl">😺😺</Text>
+      <Link href="/" className="text-white">
+        Home
+      </Link>
+    </View>
+  );
 }

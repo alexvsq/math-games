@@ -1,7 +1,7 @@
 import { View, Text, Pressable, Dimensions } from "react-native";
 import { Image } from "expo-image";
 
-export default function index() {
+export default function Keyboard({ input, setInput, enter }) {
   const { width } = Dimensions.get("window");
   const widthButton = Math.floor(width / 4 - 12);
 
@@ -9,7 +9,7 @@ export default function index() {
     "1",
     "2",
     "3",
-    "del",
+    "0",
     "4",
     "5",
     "6",
@@ -17,7 +17,7 @@ export default function index() {
     "7",
     "8",
     "9",
-    "0",
+    "del",
   ];
 
   return (
@@ -26,10 +26,10 @@ export default function index() {
         {buttons.map((button, index) =>
           button === "del" ? (
             <Pressable
-              onPress={() => console.log("del")}
+              onPress={() => setInput(input.slice(0, -1))}
               key={index}
               style={{ width: widthButton }}
-              className=" bg-black m-[2px] rounded-[10px] h-[60px] flex justify-center items-center"
+              className=" bg-black m-[2px] rounded-[10px] h-[62px] flex justify-center items-center"
             >
               <Image
                 className="w-[30px] h-[30px]"
@@ -39,10 +39,10 @@ export default function index() {
             </Pressable>
           ) : button === "enter" ? (
             <Pressable
-              onPress={() => console.log("enter")}
+              onPress={() => enter()}
               key={index}
               style={{ width: widthButton }}
-              className=" bg-black m-[2px] rounded-[10px] h-[60px] flex justify-center items-center"
+              className=" bg-black m-[2px] rounded-[10px] h-[62px] flex justify-center items-center"
             >
               <Image
                 className="w-[30px] h-[30px]"
@@ -52,10 +52,10 @@ export default function index() {
             </Pressable>
           ) : (
             <Pressable
-              onPress={() => console.log(button)}
+              onPress={() => setInput(input + button)}
               key={index}
               style={{ width: widthButton }}
-              className=" bg-black m-[2px] rounded-[10px] h-[60px] flex justify-center items-center"
+              className=" bg-black m-[2px] rounded-[10px] h-[62px] flex justify-center items-center"
             >
               <Text className=" text-white text-2xl font-bold">{button}</Text>
             </Pressable>
