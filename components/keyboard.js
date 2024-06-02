@@ -3,7 +3,7 @@ import { Image } from "expo-image";
 
 export default function Keyboard({ input, setInput, enter }) {
   const { width } = Dimensions.get("window");
-  const widthButton = Math.floor(width / 4 - 12);
+  const widthButton = Math.floor(width / 4 - 11);
 
   const buttons = [
     "1",

@@ -11,8 +11,8 @@ export default function Layout() {
 
   return (
     <>
-      <StatusBar style="light" />
       <SafeAreaView style={styles.container}>
+        <StatusBar style="light" />
         <ImageBackground
           source={bgImage}
           style={styles.image}
@@ -38,6 +38,6 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     resizeMode: "repeat",
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
   },
 });

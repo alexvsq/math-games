@@ -47,7 +47,6 @@ export default function index() {
   useEffect(() => {
     newOperation();
   }, []);
-  console.log(time);
 
   return (
     <View className="flex flex-1">
