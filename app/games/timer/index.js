@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { randomEquation } from "../../../logic/randomEquation";
 import BarTimer from "../../../components/barTimer";
 import { router } from "expo-router";
+import HeaderPoints from "../../../components/headerPoints";
 
 export default function index() {
   const [equation, setEquation] = useState("");
@@ -51,9 +52,9 @@ export default function index() {
   return (
     <View className="flex flex-1">
       <BackButton />
-
+      <HeaderPoints />
       <View className="flex flex-1 justify-center ">
-        <View className=" bg-gray1/60 blur-lg rounded-[10px] flex justify-center items-center ">
+        <View className="bg-gray1/60 blur-lg rounded-[10px] flex justify-center items-center ">
           <Text className="text-white text-4xl font-bold my-5">
             {equation} ={" "}
             <Text className="text-green">{input === "" ? "X" : input}</Text>

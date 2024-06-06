@@ -5,9 +5,10 @@ import * as NavigationBar from "expo-navigation-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Layout() {
-  if (Platform.OS === "android")
+  if (Platform.OS === "android") {
     NavigationBar.setBackgroundColorAsync("#0b0b0b");
-  const bgImage = require("../assets/images/bg-patron5.png");
+  }
+  const bgImage = require("../assets/images/bg-patron2.png");
 
   return (
     <>

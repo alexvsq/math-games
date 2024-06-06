@@ -3,6 +3,7 @@ import { router } from "expo-router";
 import { Image } from "expo-image";
 
 export default function cardGame() {
+  const name = "timer";
   return (
     <>
       <View className=" flex flex-row items-center justify-between py-3 px-3">
@@ -16,14 +17,15 @@ export default function cardGame() {
           </View>
           <View>
             <Text className=" text-green text-xs">Timer</Text>
-            <Text className=" text-white text-xl font-bold">Timer</Text>
+            <Text className=" text-white text-lg font-bold">Timer</Text>
             <Text className=" text-grayText text-xs">Pt. 500</Text>
           </View>
         </View>
-        <Pressable onPress={() => router.push("/games/timer")}>
-          <Text className=" bg-green px-8 py-1 rounded-full font-bold">
-            Play
-          </Text>
+        <Pressable
+          className=" bg-green px-8 py-1 rounded-full"
+          onPress={() => router.replace("/gamesList/gamePopUp/" + name)}
+        >
+          <Text className=" font-bold">Play</Text>
         </Pressable>
       </View>
       <View className="h-[1px] w-full bg-grayLines"></View>
