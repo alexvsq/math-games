@@ -1,5 +1,5 @@
 export function randomNumber(x) {
-  const min = x > 15 ? x - 15 : 2;
+  const min = x > 25 ? x - 25 : 2;
   const num = Math.floor(Math.random() * (x - min) + min);
   return num;
 }
@@ -32,6 +32,8 @@ export function randomEquation(lNum1, lNum2, level) {
   }
   if (operator === "/" && num1 % num2 !== 0) {
     [num1, num2] = [num2, num1];
+  } if (operator === "*") {
+    [num1, num2] = [num1 - 10, num2 - 10];
   }
   const equation = num1 + " " + operator + " " + num2;
   const result = eval(equation);

@@ -1,12 +1,12 @@
-import { View, Text } from "react-native";
-import React from "react";
+import { View } from "react-native";
 
-export default function barTimer({ size }) {
+export default function barTimer({ sizeBar = 100 }) {
   return (
-    <View className="my-4">
-      <View className="flex bg-gray1 h-[20px] rounded-full p-1">
+    <View className="my-2">
+      <View className="flex bg-gray1 h-[16px] rounded-full p-1 border-solid border-[1px] border-grayLines">
         <View
-          style={{ width: `${size}%` }}
+          // style={{ width: `${sizeBar}%` }}
+          style={{ width: `${sizeBar}%` }}
           className="bg-green h-full rounded-full"
         />
       </View>

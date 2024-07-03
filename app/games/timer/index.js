@@ -1,68 +1,85 @@
-import { View, Text } from "react-native";
-import BackButton from "../../../components/backButton";
-import Keyboard from "../../../components/keyboard";
 import { useState, useEffect } from "react";
-import { randomEquation } from "../../../logic/randomEquation";
-import BarTimer from "../../../components/barTimer";
-import { router } from "expo-router";
-import HeaderPoints from "../../../components/headerPoints";
+import { View } from "react-native";
+import Keyboard from "../../../components/keyboard";
+import Display from "../../../modules/timer/display";
+import BarTimer from "../../../modules/timer/barTimeModule";
+import { randomEquation } from "../../../controllers/randomEquation";
+import Minutes from "../../../modules/timer/minutes";
+import Level from "../../../modules/timer/level";
+import Points from "../../../modules/timer/points";
+import { saveInfoGameOver } from '../../../controllers/saveInfoGameOver'
 
 export default function index() {
-  const [equation, setEquation] = useState("");
-  const [answer, setAnswer] = useState(0);
-  const [input, setInput] = useState("");
+  const [inputKeyboard, setInputKeyboard] = useState("");
+  const [problem, setProblem] = useState([]);
   const [level, setLevel] = useState(5);
-  const [time, setTime] = useState(100);
+  const [durationRes, setDurationRes] = useState(0);
+  const [points, setPoints] = useState(0);
+  const [startGame, setStartGame] = useState(0)
 
-  function checkAnswer() {
-    if (input === answer.toString()) {
-      setLevel(level + 1);
-      newOperation();
-      setInput("");
-      console.log(level);
+  useEffect(() => {
+    const problem = randomEquation(level, level, level > 45 ? "medium" : "easy")
+    setProblem(problem);
+    const durationInit = Date.now();
+    setDurationRes(durationInit);
+    setStartGame(Date.now())
+  }, []);
+
+  function actionBtnKeyboard(x) {
+    if (x.id === "enter") {
+      checkAnswer();
+    } else if (x.id === "delete") {
+      setInputKeyboard(inputKeyboard.slice(0, -1));
+    } else {
+      setInputKeyboard(inputKeyboard + x.value);
     }
   }
 
-  function newOperation() {
-    const { equation, result } = randomEquation(level, level, "easy");
-    setEquation(equation);
-    setAnswer(result);
+  function checkAnswer() {
+    if (inputKeyboard == problem.result) {
+      setInputKeyboard("");
+      const newProblem = randomEquation(level, level, level > 45 ? "medium" : "easy");
+      setProblem(newProblem);
+      setLevel((prev) => prev + 2);
+      const finalDuration = Math.floor((Date.now() - durationRes) / 1000);
+      setPoints(
+        (prev) => prev + (50 - finalDuration < 0 ? 0 : 50 - finalDuration)
+      );
+      setDurationRes(Date.now());
+    }
   }
 
-  useEffect(() => {
-    setTime(100);
-    const interval = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime <= 0) {
-          clearInterval(interval);
-          router.back();
-          // return 0;
-        }
-        return prevTime - 0.5;
-      });
-    }, 50);
-
-    return () => clearInterval(interval);
-  }, [level]);
-
-  useEffect(() => {
-    newOperation();
-  }, []);
+  const saveDataGameOver = () => {
+    const newTime = Date.now()
+    const newDuration = Math.floor((newTime - startGame) / 1000)
+    console.log(newDuration)
+    saveInfoGameOver({
+      gameName: "timer",
+      level: Math.floor(level / 5),
+      points: points,
+      duration: newDuration
+    })
+  }
 
   return (
-    <View className="flex flex-1">
-      <BackButton />
-      <HeaderPoints />
-      <View className="flex flex-1 justify-center ">
-        <View className="bg-gray1/60 blur-lg rounded-[10px] flex justify-center items-center ">
-          <Text className="text-white text-4xl font-bold my-5">
-            {equation} ={" "}
-            <Text className="text-green">{input === "" ? "X" : input}</Text>
-          </Text>
+    <View className="flex flex-1 justify-between">
+      <View className="flex flex-row gap-3">
+        <View style={{ flex: 1 }}>
+          <Level content={Math.floor(level / 5)} />
         </View>
-        <BarTimer size={time} />
+        <View style={{ flex: 1 }}>
+          <Points points={points} />
+        </View>
+        <View style={{ flex: 1 }}>
+          <Minutes />
+        </View>
       </View>
-      <Keyboard input={input} setInput={setInput} enter={checkAnswer} />
+      <View>
+        <Display problem={problem} inputKeyboard={inputKeyboard} />
+
+        <BarTimer restart={level} gameOverSave={saveDataGameOver} />
+      </View>
+      <Keyboard action={actionBtnKeyboard} />
     </View>
   );
 }

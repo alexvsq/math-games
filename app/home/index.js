@@ -20,7 +20,7 @@ export default function Index() {
       <Pressable
         className=" bg-gray1 py-3 rounded-lg flex items-center my-2"
         onPress={() => {
-          router.push("/about");
+          router.push("/games/prueba");
         }}
       >
         <Text className="text-lg font-bold text-white">New Game</Text>
